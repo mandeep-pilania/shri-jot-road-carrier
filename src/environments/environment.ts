@@ -8,11 +8,13 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'YOUR_API_KEY',
-    authDomain: 'YOUR_PROJECT_ID.firebaseapp.com',
-    projectId: 'YOUR_PROJECT_ID',
-    storageBucket: 'YOUR_PROJECT_ID.appspot.com',
-    messagingSenderId: 'YOUR_SENDER_ID',
-    appId: 'YOUR_APP_ID',
+    apiKey: "AIzaSyDLbR-zYySZzViUbOBOJI8y4hTE6rg6qYU",
+    authDomain: "shri-jot-road-carrier.firebaseapp.com",
+    databaseURL: "https://shri-jot-road-carrier-default-rtdb.firebaseio.com",
+    projectId: "shri-jot-road-carrier",
+    storageBucket: "shri-jot-road-carrier.firebasestorage.app",
+    messagingSenderId: "805982376770",
+    appId: "1:805982376770:web:efe1a5ee41951faad66edb",
+    measurementId: "G-5NRDPZ1YYQ",
   },
 };
