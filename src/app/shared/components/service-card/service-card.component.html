@@ -1,0 +1,11 @@
+<article class="service-card">
+  <div class="service-card__icon">
+    <lucide-icon [name]="data.icon" [size]="26"></lucide-icon>
+  </div>
+  <h3 class="service-card__title">{{ data.title }}</h3>
+  <p class="service-card__desc">{{ data.description }}</p>
+  <a class="service-card__link" [routerLink]="data.link || '/contact'">
+    Learn More
+    <lucide-icon name="arrow-right" [size]="16"></lucide-icon>
+  </a>
+</article>

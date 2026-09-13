@@ -1,0 +1,99 @@
+.google-reviews {
+  background: var(--gray-light);
+  padding: 96px 0;
+
+  @media (max-width: 768px) { padding: 64px 0; }
+}
+
+.google-reviews__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.google-reviews__summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.google-reviews__g { width: 42px; height: 42px; flex-shrink: 0; }
+
+.google-reviews__rating {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--navy-dark);
+
+  span { font-size: 13px; font-weight: 500; color: var(--text-gray); }
+}
+
+.google-reviews__stars {
+  display: flex;
+  gap: 2px;
+  color: var(--orange);
+  margin: 2px 0;
+}
+
+.google-reviews__count { font-size: 13px; color: var(--text-gray); }
+
+.google-reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 560px) { grid-template-columns: 1fr; }
+}
+
+.google-reviews__card {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 22px;
+}
+
+.google-reviews__card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.google-reviews__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.google-reviews__name { font-size: 14px; font-weight: 700; color: var(--navy-dark); }
+.google-reviews__business { font-size: 12px; color: var(--text-gray); }
+
+.google-reviews__card-stars {
+  display: flex;
+  gap: 2px;
+  color: var(--orange);
+  margin-bottom: 10px;
+}
+
+.google-reviews__quote { font-size: 13.5px; line-height: 1.6; }
+
+.google-reviews__note {
+  margin-top: 24px;
+  font-size: 12px;
+  color: var(--text-gray);
+  text-align: center;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}

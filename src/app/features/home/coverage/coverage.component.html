@@ -1,0 +1,44 @@
+<section class="coverage">
+  <div class="container coverage__grid">
+    <div class="coverage__content" appReveal>
+      <p class="section-label">Coverage Area</p>
+      <h2 class="section-heading">Serving Punjab, Haryana, Rajasthan, Himachal &amp; All NCR</h2>
+      <p class="section-description" style="margin-bottom: 28px;">
+        From our base in Transport Nagar, Ludhiana, we run daily full load and part load service —
+        plus house shifting and vehicle transport — across Haryana, Rajasthan, Punjab, Himachal
+        Pradesh and All NCR.
+      </p>
+
+      <div class="coverage__stats">
+        <div>
+          <lucide-icon name="map-pin" [size]="20"></lucide-icon>
+          <div><p>4 States + NCR</p><span>Coverage Area</span></div>
+        </div>
+        <div>
+          <lucide-icon name="truck" [size]="20"></lucide-icon>
+          <div><p>Daily</p><span>Departures</span></div>
+        </div>
+        <div>
+          <lucide-icon name="home" [size]="20"></lucide-icon>
+          <div><p>Available</p><span>House Shifting</span></div>
+        </div>
+      </div>
+
+      <a routerLink="/contact" class="btn btn-navy">Book a Shipment</a>
+    </div>
+
+    <div class="coverage__map" appReveal [revealDelay]="120">
+      <p class="coverage__map-title">Base &amp; Coverage Regions</p>
+      <ol class="coverage__route">
+        <li *ngFor="let stop of stops" [class.is-endpoint]="stop.isEndpoint">
+          <span class="coverage__route-dot"></span>
+          <span class="coverage__route-name">{{ stop.name }}</span>
+        </li>
+      </ol>
+      <div class="coverage__map-caption">
+        <span>Full Load &amp; Part Load</span>
+        Daily Service, Every Day of the Week
+      </div>
+    </div>
+  </div>
+</section>

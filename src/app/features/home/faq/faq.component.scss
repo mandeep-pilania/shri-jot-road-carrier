@@ -1,0 +1,53 @@
+.faq {
+  background: var(--white);
+  padding: 96px 0;
+
+  @media (max-width: 768px) { padding: 64px 0; }
+}
+
+.faq__inner { max-width: 800px; margin: 0 auto; }
+
+.faq__head { text-align: center; margin-bottom: 36px; }
+
+.faq__item {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.faq__question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: transparent;
+  border: none;
+  padding: 20px 4px;
+  text-align: left;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--navy-dark);
+}
+
+.faq__chevron { transition: transform 0.25s ease; color: var(--orange); flex-shrink: 0; }
+
+.is-open .faq__chevron { transform: rotate(180deg); }
+
+.faq__answer-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.3s ease;
+}
+
+// grid-template-rows: 0fr -> 1fr animates to the answer's real content
+// height, whatever that is -- no fixed max-height to accidentally clip
+// a longer answer added later.
+.is-open .faq__answer-wrap { grid-template-rows: 1fr; }
+
+.faq__answer-inner { overflow: hidden; min-height: 0; }
+
+.faq__answer {
+  font-size: 14px;
+  padding: 0 4px 20px;
+  line-height: 1.7;
+}

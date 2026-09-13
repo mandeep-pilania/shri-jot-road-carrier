@@ -1,0 +1,23 @@
+<section class="safety">
+  <div class="container safety__grid">
+    <div class="safety__content" appReveal>
+      <p class="section-label">Safety First</p>
+      <h2 class="section-heading">Your Goods. Our Responsibility.</h2>
+
+      <ul class="safety__list">
+        <li *ngFor="let f of features">
+          <lucide-icon [name]="f.icon" [size]="18"></lucide-icon>
+          <span>{{ f.label }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="safety__image" appReveal [revealDelay]="120">
+      <img
+        src="https://images.unsplash.com/photo-1716512060259-d114cfba13e8?auto=format&fit=crop&w=900&q=80"
+        alt="Driver and warehouse staff inspecting cargo before loading"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

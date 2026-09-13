@@ -1,0 +1,27 @@
+<section class="testimonials">
+  <div class="container">
+    <div class="testimonials__head" appReveal>
+      <div>
+        <p class="section-label">Client Testimonials</p>
+        <h2 class="section-heading">What Our Clients Say</h2>
+      </div>
+      <a
+        href="https://www.google.com/maps/search/?api=1&amp;query=Shri+Jot+Road+Carrier+Transport+Nagar+Ludhiana"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-outline"
+      >
+        View All Reviews
+      </a>
+    </div>
+
+    <div class="testimonials__grid">
+      <app-testimonial-card
+        *ngFor="let t of testimonials; let i = index"
+        [data]="t"
+        appReveal
+        [revealDelay]="i * 70"
+      ></app-testimonial-card>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,105 @@
+.login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gray-light);
+  padding: 100px 20px 60px;
+}
+
+.login__card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 40px 36px;
+}
+
+.login__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  color: var(--navy-dark);
+  margin-bottom: 28px;
+}
+
+.login__logo {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  background: var(--orange);
+  color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+}
+
+h1 { font-size: 24px; margin-bottom: 6px; }
+.login__subtitle { font-size: 14px; margin-bottom: 28px; }
+
+form {
+  display: flex;
+  flex-direction: column;
+
+  label { font-size: 13.5px; font-weight: 600; color: var(--navy-dark); margin-bottom: 6px; }
+
+  input {
+    padding: 12px 14px;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-size: 14.5px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s ease;
+
+    &:focus { border-color: var(--navy); }
+  }
+}
+
+.login__firebase-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #FFF4EC;
+  border: 1px solid #FFD9BB;
+  color: #9A4B15;
+  font-size: 12.5px;
+  line-height: 1.5;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+
+  lucide-icon { flex-shrink: 0; margin-top: 1px; }
+  code { background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 4px; }
+}
+
+.error { color: #D64545; font-size: 12.5px; margin: -10px 0 12px; }
+
+.login__status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.login__status--error { color: #D64545; }
+
+.login__submit { width: 100%; justify-content: center; margin-top: 6px; }
+.login__submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.login__note {
+  font-size: 12.5px;
+  text-align: center;
+  margin-top: 20px;
+  color: var(--text-gray);
+}
+
+.login__back {
+  display: block;
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--navy);
+}

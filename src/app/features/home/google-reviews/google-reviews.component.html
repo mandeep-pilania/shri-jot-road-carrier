@@ -1,0 +1,53 @@
+<section class="google-reviews">
+  <div class="container">
+    <div class="google-reviews__head" appReveal>
+      <div class="google-reviews__summary">
+        <svg class="google-reviews__g" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h11.8c-.5 2.8-2.1 5.1-4.4 6.7v5.5h7.1c4.2-3.9 6.6-9.6 6.6-16.7z"/>
+          <path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-7.1-5.5c-2 1.3-4.5 2.1-7.4 2.1-5.7 0-10.5-3.8-12.2-9H4.5v5.7C8.1 41.1 15.4 46 24 46z"/>
+          <path fill="#FBBC05" d="M11.8 28.3c-.4-1.3-.7-2.7-.7-4.3s.2-3 .7-4.3v-5.7H4.5C3 16.9 2 20.3 2 24s1 7.1 2.5 10l7.3-5.7z"/>
+          <path fill="#EA4335" d="M24 10.8c3.2 0 6.1 1.1 8.4 3.3l6.3-6.3C34.9 4.3 29.9 2 24 2 15.4 2 8.1 6.9 4.5 14l7.3 5.7c1.7-5.2 6.5-9 12.2-9z"/>
+        </svg>
+        <div>
+          <p class="google-reviews__rating">{{ overallRating }} <span>out of 5</span></p>
+          <div class="google-reviews__stars" aria-hidden="true">
+            <lucide-icon *ngFor="let s of stars" name="star" [size]="16"></lucide-icon>
+          </div>
+          <p class="google-reviews__count">Based on {{ reviewCount }} Google reviews</p>
+        </div>
+      </div>
+
+      <a
+        href="https://www.google.com/maps/search/?api=1&amp;query=Shri+Jot+Road+Carrier+Transport+Nagar+Ludhiana"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-navy"
+      >
+        View Live Reviews on Google
+        <lucide-icon name="arrow-right" [size]="16"></lucide-icon>
+      </a>
+    </div>
+
+    <div class="google-reviews__grid">
+      <article class="google-reviews__card" *ngFor="let r of sampleReviews; let i = index" appReveal [revealDelay]="i * 70">
+        <div class="google-reviews__card-head">
+          <div class="google-reviews__avatar">{{ r.name.charAt(0) }}</div>
+          <div>
+            <p class="google-reviews__name">{{ r.name }}</p>
+            <p class="google-reviews__business">{{ r.business }}</p>
+          </div>
+        </div>
+        <div class="google-reviews__card-stars">
+          <lucide-icon *ngFor="let s of stars.slice(0, r.rating)" name="star" [size]="13"></lucide-icon>
+        </div>
+        <p class="google-reviews__quote">{{ r.quote }}</p>
+      </article>
+    </div>
+
+    <p class="google-reviews__note">
+      The rating and review count above are pulled from our Google Business Profile. The individual
+      reviews shown here are illustrative samples — tap "View Live Reviews on Google" above to read the
+      current, verified reviews.
+    </p>
+  </div>
+</section>

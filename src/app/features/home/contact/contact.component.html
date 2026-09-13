@@ -1,0 +1,102 @@
+<section class="contact">
+  <div class="container contact__grid">
+    <div class="contact__info" appReveal>
+      <p class="section-label">Contact Us</p>
+      <h2 class="section-heading">We're Here to Help</h2>
+
+      <div class="contact__item">
+        <lucide-icon name="phone" [size]="18"></lucide-icon>
+        <div><span>Phone</span><p>Sonu Choudhary: +91 90234 24923<br />Parmod: +91 87108 00029</p></div>
+      </div>
+      <div class="contact__item">
+        <lucide-icon name="mail" [size]="18"></lucide-icon>
+        <div><span>Email</span><p>info&#64;shrijotroadcarrier.in</p></div>
+      </div>
+      <div class="contact__item">
+        <lucide-icon name="map-pin" [size]="18"></lucide-icon>
+        <div><span>Location</span><p>Plot No. 3508, St. No. 4, Heera Nagar, Transport Nagar, Ludhiana, Punjab - 141003</p></div>
+      </div>
+      <div class="contact__item">
+        <lucide-icon name="clock" [size]="18"></lucide-icon>
+        <div><span>Working Hours</span><p>Open 24/7<br />Every day of the week</p></div>
+      </div>
+
+      <div class="contact__rating">
+        <lucide-icon name="star" [size]="18"></lucide-icon>
+        <span><strong>4.8</strong> · 84 Google Reviews</span>
+      </div>
+
+      <p class="contact__gstin">GSTIN: 03EMQPK4737Q1Z9</p>
+
+      <div class="contact__online-links">
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=Shri+Jot+Road+Carrier+Transport+Nagar+Ludhiana" target="_blank" rel="noopener">
+          View on Google Maps
+          <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+        </a>
+        <a href="https://www.justdial.com/Ludhiana/search.aspx?q=Shri+Jot+Road+Carrier" target="_blank" rel="noopener">
+          Find Us on Justdial
+          <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+        </a>
+      </div>
+    </div>
+
+    <form class="contact__form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate appReveal [revealDelay]="120">
+      <div class="field">
+        <label for="c-name">Name</label>
+        <input id="c-name" type="text" formControlName="name" placeholder="Your full name" />
+        <p class="field-error" *ngIf="f.name.touched && f.name.invalid">Please enter your name.</p>
+      </div>
+
+      <div class="field">
+        <label for="c-phone">Phone</label>
+        <input id="c-phone" type="tel" formControlName="phone" placeholder="10-digit mobile number" />
+        <p class="field-error" *ngIf="f.phone.touched && f.phone.invalid">Enter a valid 10-digit mobile number.</p>
+      </div>
+
+      <div class="field">
+        <label for="c-alt-phone">Alternate Mobile <span class="field-optional">(optional)</span></label>
+        <input id="c-alt-phone" type="tel" formControlName="altPhone" placeholder="10-digit mobile number" />
+        <p class="field-error" *ngIf="f.altPhone.touched && f.altPhone.invalid">Enter a valid 10-digit mobile number.</p>
+      </div>
+
+      <div class="field">
+        <label for="c-email">Email <span class="field-optional">(optional)</span></label>
+        <input id="c-email" type="email" formControlName="email" placeholder="you&#64;company.com" />
+        <p class="field-error" *ngIf="f.email.touched && f.email.invalid">Enter a valid email address.</p>
+      </div>
+
+      <div class="field field--full">
+        <label for="c-subject">Subject</label>
+        <input id="c-subject" type="text" formControlName="subject" placeholder="What is this about?" />
+        <p class="field-error" *ngIf="f.subject.touched && f.subject.invalid">Please enter a subject.</p>
+      </div>
+
+      <div class="field field--full">
+        <label for="c-message">Message</label>
+        <textarea id="c-message" rows="4" formControlName="message" placeholder="Write your message..."></textarea>
+        <p class="field-error" *ngIf="f.message.touched && f.message.invalid">Message should be at least 10 characters.</p>
+      </div>
+
+      <div class="field field--full contact__submit-row">
+        <button type="submit" class="btn btn-primary" [disabled]="state === 'loading'">
+          <ng-container [ngSwitch]="state">
+            <ng-container *ngSwitchCase="'loading'">
+              <lucide-icon name="loader-2" [size]="18" class="spin"></lucide-icon>
+              Sending...
+            </ng-container>
+            <ng-container *ngSwitchDefault>Send Message</ng-container>
+          </ng-container>
+        </button>
+
+        <p class="contact__status contact__status--success" *ngIf="state === 'success'">
+          <lucide-icon name="check-circle-2" [size]="16"></lucide-icon>
+          Message sent! We'll get back to you shortly.
+        </p>
+        <p class="contact__status contact__status--error" *ngIf="state === 'error'">
+          <lucide-icon name="alert-circle" [size]="16"></lucide-icon>
+          Something went wrong. Please try again.
+        </p>
+      </div>
+    </form>
+  </div>
+</section>

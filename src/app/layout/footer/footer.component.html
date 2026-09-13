@@ -1,0 +1,77 @@
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <div class="footer__logo-row">
+        <app-logo-mark [size]="38"></app-logo-mark>
+        <div>
+          <p class="footer__company">Shri Jot Road Carrier</p>
+          <p class="footer__tagline">Daily Full Load &amp; Part Load Transport</p>
+        </div>
+      </div>
+      <p class="footer__desc">
+        Your trusted transporter for full load &amp; part load goods transport, house shifting and vehicle
+        transport across Punjab, Haryana, Rajasthan, Himachal Pradesh and all of NCR.
+      </p>
+      <p class="footer__gstin">GSTIN: 03EMQPK4737Q1Z9</p>
+    </div>
+
+    <nav class="footer__col" aria-label="Quick Links">
+      <h4>Quick Links</h4>
+      <a routerLink="/">Home</a>
+      <a routerLink="/about">About</a>
+      <a routerLink="/services">Services</a>
+      <a routerLink="/fleet">Fleet</a>
+      <a routerLink="/coverage">Coverage Area</a>
+      <a routerLink="/contact">Contact</a>
+    </nav>
+
+    <nav class="footer__col" aria-label="Services">
+      <h4>Services</h4>
+      <a routerLink="/services">Full Truck Load</a>
+      <a routerLink="/services">Part Load</a>
+      <a routerLink="/services">Goods Transportation</a>
+      <a routerLink="/services">House Shifting</a>
+      <a routerLink="/services">Car &amp; Vehicle Transport</a>
+      <a routerLink="/services">Industrial Cargo</a>
+      <a routerLink="/services">Warehouse &amp; Storage</a>
+    </nav>
+
+    <div class="footer__col footer__contact">
+      <h4>Contact Us</h4>
+      <p><lucide-icon name="phone" [size]="15"></lucide-icon> Sonu Choudhary: +91 90234 24923</p>
+      <p><lucide-icon name="phone" [size]="15"></lucide-icon> Parmod: +91 87108 00029</p>
+      <p><lucide-icon name="mail" [size]="15"></lucide-icon> info&#64;shrijotroadcarrier.in</p>
+      <p><lucide-icon name="map-pin" [size]="15"></lucide-icon> Plot No. 3508, St. No. 4, Heera Nagar, Transport Nagar, Ludhiana, Punjab - 141003</p>
+      <p><lucide-icon name="clock" [size]="15"></lucide-icon> Open 24/7</p>
+    </div>
+
+    <div class="footer__newsletter">
+      <h4>Newsletter</h4>
+      <p>Get the latest updates and offers.</p>
+      <form class="footer__newsletter-form" (ngSubmit)="subscribe()">
+        <label for="newsletter-email" class="visually-hidden">Email address</label>
+        <input
+          id="newsletter-email"
+          type="email"
+          placeholder="Enter your email"
+          name="newsletterEmail"
+          [(ngModel)]="newsletterEmail"
+          [disabled]="submitting"
+          required
+        />
+        <button type="submit" aria-label="Subscribe" [disabled]="submitting">
+          <lucide-icon name="send" [size]="16"></lucide-icon>
+        </button>
+      </form>
+      <p *ngIf="subscribed" class="footer__newsletter-success">Thanks for subscribing!</p>
+      <p *ngIf="errorMessage" class="footer__newsletter-error">{{ errorMessage }}</p>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>&copy; {{ year }} Shri Jot Road Carrier. All rights reserved.</p>
+    <div class="footer__bottom-links">
+      <a href="/sitemap.xml" target="_blank" rel="noopener">Sitemap</a>
+    </div>
+  </div>
+</footer>

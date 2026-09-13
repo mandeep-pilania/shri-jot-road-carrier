@@ -1,0 +1,51 @@
+<section class="fleet">
+  <div class="container">
+    <div class="fleet__head" appReveal>
+      <div>
+        <p class="section-label">Our Fleet</p>
+        <h2 class="section-heading">A Modern Fleet for Every Need</h2>
+        <p class="section-description">
+          We operate a wide range of well-maintained vehicles to ensure safe and efficient delivery
+          across Haryana, Rajasthan, Punjab, Himachal Pradesh and All NCR.
+        </p>
+      </div>
+      <a routerLink="/fleet" class="btn btn-navy">Our Fleet Details</a>
+    </div>
+
+    <div
+      class="fleet__carousel"
+      appReveal
+      [revealDelay]="120"
+      (mouseenter)="pauseAutoplay()"
+      (mouseleave)="resumeAutoplay()"
+    >
+      <button type="button" class="fleet__nav fleet__nav--prev" (click)="prev()" aria-label="Previous vehicle">
+        <lucide-icon name="chevron-left" [size]="22"></lucide-icon>
+      </button>
+
+      <div class="fleet__viewport">
+        <div class="fleet__track" [style.transform]="'translateX(-' + (activeIndex() * 100) + '%)'">
+          <div class="fleet__slide" *ngFor="let v of fleet">
+            <app-fleet-card [data]="v"></app-fleet-card>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="fleet__nav fleet__nav--next" (click)="next()" aria-label="Next vehicle">
+        <lucide-icon name="chevron-right" [size]="22"></lucide-icon>
+      </button>
+    </div>
+
+    <div class="fleet__dots">
+      <button
+        type="button"
+        *ngFor="let v of fleet; let i = index"
+        class="fleet__dot"
+        [class.is-active]="activeIndex() === i"
+        (click)="goTo(i)"
+        [attr.aria-label]="'Show ' + v.name"
+        [attr.aria-current]="activeIndex() === i"
+      ></button>
+    </div>
+  </div>
+</section>

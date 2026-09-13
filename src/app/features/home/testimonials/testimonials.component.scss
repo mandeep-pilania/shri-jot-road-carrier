@@ -1,0 +1,24 @@
+.testimonials {
+  background: var(--gray-light);
+  padding: 96px 0;
+
+  @media (max-width: 768px) { padding: 64px 0; }
+}
+
+.testimonials__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+
+  @media (max-width: 1080px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 560px) { grid-template-columns: 1fr; }
+}

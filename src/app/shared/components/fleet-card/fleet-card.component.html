@@ -1,0 +1,10 @@
+<article class="fleet-card">
+  <div class="fleet-card__image">
+    <img [src]="data.image" [alt]="data.name + ' used by Shri Jot Road Carrier'" loading="lazy" />
+  </div>
+  <div class="fleet-card__body">
+    <h3 class="fleet-card__name">{{ data.name }}</h3>
+    <p class="fleet-card__desc">{{ data.description }}</p>
+    <span class="fleet-card__capacity">{{ data.capacity }}</span>
+  </div>
+</article>

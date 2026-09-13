@@ -1,0 +1,23 @@
+<section class="services">
+  <div class="container">
+    <div class="services__head" appReveal>
+      <div>
+        <p class="section-label">Our Services</p>
+        <h2 class="section-heading">Complete Transport Solutions for Every Business</h2>
+      </div>
+      <p class="section-description">
+        From full load &amp; part load goods transport to house shifting and vehicle transport, we serve
+        Punjab, Haryana, Rajasthan, Himachal Pradesh and all of NCR.
+      </p>
+    </div>
+
+    <div class="services__grid">
+      <app-service-card
+        *ngFor="let s of services; let i = index"
+        [data]="s"
+        appReveal
+        [revealDelay]="i * 60"
+      ></app-service-card>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,86 @@
+.about {
+  background: var(--gray-light);
+  padding: 96px 0;
+
+  @media (max-width: 768px) { padding: 64px 0; }
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.about__image {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+
+  img { width: 100%; height: 460px; object-fit: cover; }
+
+  @media (max-width: 900px) { img { height: 320px; } }
+}
+
+.about__image-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-md);
+
+  lucide-icon { color: var(--orange); margin-bottom: 8px; }
+  p { font-weight: 700; color: var(--navy-dark); font-size: 15px; }
+}
+
+.about__features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy-dark);
+
+    lucide-icon { color: var(--orange); flex-shrink: 0; }
+  }
+}
+
+.about__stats-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.about__stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-sm);
+
+  lucide-icon { color: var(--orange); }
+}
+
+.about__stat-value { font-weight: 800; font-size: 17px; color: var(--navy-dark); }
+.about__stat-label { font-size: 12px; }

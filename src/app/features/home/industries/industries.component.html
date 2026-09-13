@@ -1,0 +1,15 @@
+<section class="industries">
+  <div class="container">
+    <div class="industries__head" appReveal>
+      <p class="section-label">Industries We Serve</p>
+      <h2 class="section-heading">Trusted Across Every Sector</h2>
+    </div>
+
+    <div class="industries__grid">
+      <div class="industries__item" *ngFor="let ind of industries; let i = index" appReveal [revealDelay]="i * 40">
+        <lucide-icon [name]="ind.icon" [size]="24"></lucide-icon>
+        <span>{{ ind.name }}</span>
+      </div>
+    </div>
+  </div>
+</section>

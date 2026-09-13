@@ -1,0 +1,14 @@
+<article class="testimonial-card">
+  <lucide-icon name="quote" [size]="22" class="testimonial-card__quote-icon"></lucide-icon>
+  <p class="testimonial-card__text">{{ data.quote }}</p>
+  <div class="testimonial-card__footer">
+    <img [src]="data.avatar" [alt]="data.name" class="testimonial-card__avatar" loading="lazy" />
+    <div>
+      <p class="testimonial-card__name">{{ data.name }}</p>
+      <p class="testimonial-card__business">{{ data.business }}</p>
+    </div>
+    <div class="testimonial-card__rating">
+      <lucide-icon *ngFor="let s of stars" name="star" [size]="14"></lucide-icon>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,50 @@
+<section class="about">
+  <div class="container about__grid">
+    <div class="about__image" appReveal>
+      <img
+        src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=900&q=80"
+        alt="Shri Jot Road Carrier truck crossing a bridge at sunrise"
+        loading="lazy"
+      />
+      <div class="about__image-badge">
+        <lucide-icon name="quote" [size]="18"></lucide-icon>
+        <p>Connecting Punjab, Haryana, Rajasthan, Himachal &amp; NCR, Daily</p>
+      </div>
+    </div>
+
+    <div class="about__content" appReveal [revealDelay]="120">
+      <p class="section-label">About Shri Jot Road Carrier</p>
+      <h2 class="section-heading">More Than Transport. A Promise You Can Trust.</h2>
+      <p class="section-description" style="margin-bottom: 28px;">
+        With a strong focus on safety, reliability and customer satisfaction, we make sure your goods
+        reach their destination safely and on time.
+      </p>
+
+      <ul class="about__features">
+        <li *ngFor="let f of features">
+          <lucide-icon name="check-circle-2" [size]="18"></lucide-icon>
+          <span>{{ f }}</span>
+        </li>
+      </ul>
+
+      <div class="about__stats-row">
+        <div class="about__stat-card">
+          <lucide-icon name="users" [size]="20"></lucide-icon>
+          <div>
+            <p class="about__stat-value">1000+</p>
+            <p class="about__stat-label">Happy Clients</p>
+          </div>
+        </div>
+        <div class="about__stat-card">
+          <lucide-icon name="star" [size]="20"></lucide-icon>
+          <div>
+            <p class="about__stat-value">4.8/5</p>
+            <p class="about__stat-label">84 Google Reviews</p>
+          </div>
+        </div>
+      </div>
+
+      <a routerLink="/about" class="btn btn-navy about__cta">About Our Company</a>
+    </div>
+  </div>
+</section>

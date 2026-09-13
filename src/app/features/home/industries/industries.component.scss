@@ -1,0 +1,30 @@
+.industries {
+  background: var(--gray-light);
+  padding: 96px 0;
+
+  @media (max-width: 768px) { padding: 64px 0; }
+}
+
+.industries__head { text-align: center; margin-bottom: 40px; }
+
+.industries__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+
+  @media (max-width: 900px) { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 480px) { grid-template-columns: repeat(2, 1fr); }
+}
+
+.industries__item {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 26px 12px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover { transform: translateY(-4px); box-shadow: var(--shadow-sm); }
+
+  lucide-icon { color: var(--orange); margin-bottom: 10px; }
+  span { display: block; font-size: 13px; font-weight: 600; color: var(--navy-dark); }
+}

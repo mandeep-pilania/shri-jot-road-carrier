@@ -1,0 +1,27 @@
+<section class="faq">
+  <div class="container faq__inner">
+    <div class="faq__head" appReveal>
+      <p class="section-label">FAQ</p>
+      <h2 class="section-heading">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="faq__list">
+      <div class="faq__item" *ngFor="let item of faqs; let i = index" [class.is-open]="openIndex() === i">
+        <button
+          type="button"
+          class="faq__question"
+          (click)="toggle(i)"
+          [attr.aria-expanded]="openIndex() === i"
+        >
+          <span>{{ item.question }}</span>
+          <lucide-icon name="chevron-down" [size]="18" class="faq__chevron"></lucide-icon>
+        </button>
+        <div class="faq__answer-wrap">
+          <div class="faq__answer-inner">
+            <p class="faq__answer">{{ item.answer }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

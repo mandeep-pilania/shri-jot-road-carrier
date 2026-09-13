@@ -1,0 +1,214 @@
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: transparent;
+  transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+  padding: 18px 0;
+}
+
+.header--scrolled {
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  padding: 10px 0;
+
+  .header__nav-link,
+  .header__company,
+  .header__phone,
+  .header__login,
+  .header__hamburger span {
+    color: var(--navy-dark);
+  }
+
+  .header__tagline { color: var(--text-gray); }
+  .header__hamburger span { background: var(--navy-dark); }
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: auto;
+  min-width: 0;
+  max-width: 72vw;
+}
+
+.header__logo {
+  flex-shrink: 0;
+  display: flex;
+
+  @media (max-width: 400px) {
+    ::ng-deep svg { width: 34px; height: 34px; }
+  }
+}
+
+.header__brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.25;
+  min-width: 0;
+  gap: 1px;
+}
+
+.header__company {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+
+  @media (max-width: 480px) { font-size: 16px; }
+  transition: color 0.3s ease;
+}
+
+.header__tagline {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: 480px) { display: none; }
+}
+
+.header__nav {
+  display: flex;
+  gap: 26px;
+
+  @media (max-width: 1080px) { display: none; }
+}
+
+.header__nav-link {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--white);
+  transition: color 0.2s ease;
+  position: relative;
+  background: transparent;
+  border: none;
+  font-family: var(--font-body);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+
+  &:hover,
+  &.is-active {
+    color: var(--orange);
+  }
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  @media (max-width: 1080px) { display: none; }
+}
+
+.header__phone {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  transition: color 0.3s ease;
+}
+
+.header__login {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--white);
+  transition: color 0.3s ease;
+
+  &:hover { color: var(--orange); }
+}
+
+.header__cta { padding: 11px 20px; font-size: 14px; }
+
+.header__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  padding: 0;
+
+  span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--white);
+    transition: transform 0.25s ease, opacity 0.25s ease, background 0.3s ease;
+  }
+
+  &.is-open {
+    span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; }
+    span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+
+  @media (max-width: 1080px) { display: flex; }
+}
+
+.header__mobile-nav {
+  display: none;
+  flex-direction: column;
+  background: var(--white);
+  box-shadow: var(--shadow-md);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+
+  a {
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--navy-dark);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  // A flat max-height (560px) risks silently clipping the dropdown if
+  // more links are ever added, or on short/landscape viewports. Tying it
+  // to the viewport height (minus roughly the header's own height) with
+  // overflow-y: auto means it always fits, and scrolls internally on the
+  // rare screen where it still doesn't.
+  &.is-open { max-height: calc(100vh - 70px); overflow-y: auto; }
+
+  @media (max-width: 1080px) { display: flex; }
+}
+
+.header__mobile-nav a.header__mobile-phone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--orange-dark);
+
+  @media (min-width: 1081px) { display: none; }
+}
+
+.header__mobile-actions {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+
+  .btn { flex: 1; justify-content: center; }
+}

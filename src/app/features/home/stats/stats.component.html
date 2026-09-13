@@ -1,0 +1,8 @@
+<section class="stats">
+  <div class="container stats__grid">
+    <div class="stats__item" *ngFor="let s of stats">
+      <p class="stats__value" appCountUp [countTo]="s.value" [countSuffix]="s.suffix" [countDecimals]="s.decimals || 0"></p>
+      <p class="stats__label">{{ s.label }}</p>
+    </div>
+  </div>
+</section>

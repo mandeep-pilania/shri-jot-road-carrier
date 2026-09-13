@@ -1,0 +1,16 @@
+<section class="process">
+  <div class="container">
+    <div class="process__head" appReveal>
+      <p class="section-label">How It Works</p>
+      <h2 class="section-heading">How Our Transport Process Works</h2>
+    </div>
+
+    <div class="process__steps">
+      <div class="process__step" *ngFor="let s of steps; let i = index" appReveal [revealDelay]="i * 100">
+        <span class="process__number">{{ s.number }}</span>
+        <div class="process__icon"><lucide-icon [name]="s.icon" [size]="24"></lucide-icon></div>
+        <p class="process__title">{{ s.title }}</p>
+      </div>
+    </div>
+  </div>
+</section>

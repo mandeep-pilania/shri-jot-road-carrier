@@ -1,0 +1,118 @@
+.coverage {
+  background: var(--gray-light);
+  padding: 96px 0;
+
+  @media (max-width: 768px) { padding: 64px 0; }
+}
+
+.coverage__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+.coverage__stats {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    lucide-icon { color: var(--orange); }
+    p { font-weight: 800; font-size: 15px; color: var(--navy-dark); }
+    span { font-size: 12px; color: var(--text-gray); }
+  }
+}
+
+.coverage__map {
+  position: relative;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 28px 28px 84px;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.coverage__map-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-gray);
+  margin-bottom: 18px;
+}
+
+.coverage__route {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--border-light);
+  }
+
+  li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 9px 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-gray);
+  }
+}
+
+.coverage__route-dot {
+  position: relative;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.coverage__route li.is-endpoint {
+  color: var(--navy-dark);
+  font-weight: 800;
+
+  .coverage__route-dot {
+    background: var(--orange);
+    border-color: var(--orange);
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.coverage__map-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  right: 24px;
+  background: var(--navy-dark);
+  color: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+
+  span { display: block; color: var(--orange); font-size: 11px; font-weight: 600; margin-bottom: 2px; }
+}

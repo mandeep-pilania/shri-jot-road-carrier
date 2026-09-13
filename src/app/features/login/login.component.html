@@ -1,0 +1,42 @@
+<section class="login">
+  <div class="login__card">
+    <a routerLink="/" class="login__brand">
+      <app-logo-mark [size]="36"></app-logo-mark>
+      Shri Jot Road Carrier
+    </a>
+    <h1>Admin Login</h1>
+    <p class="login__subtitle">Sign in to manage enquiries, shipments and fleet data.</p>
+
+    <p class="login__firebase-notice" *ngIf="!firebaseStatus.isConfigured">
+      <lucide-icon name="alert-circle" [size]="15"></lucide-icon>
+      Firebase isn't configured yet, so sign-in won't work until real project keys are added to
+      <code>environment.ts</code>.
+    </p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <label for="email">Email Address</label>
+      <input id="email" type="email" formControlName="email" placeholder="admin@shrijotroadcarrier.in" />
+      <p class="error" *ngIf="submitted && f.email.invalid">Enter a valid email address.</p>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" placeholder="••••••••" />
+      <p class="error" *ngIf="submitted && f.password.invalid">Password must be at least 6 characters.</p>
+
+      <button type="submit" class="btn btn-primary login__submit" [disabled]="state === 'loading'">
+        {{ state === 'loading' ? 'Signing in...' : 'Sign In' }}
+      </button>
+
+      <p class="login__status login__status--error" *ngIf="state === 'error'">
+        <lucide-icon name="alert-circle" [size]="15"></lucide-icon>
+        {{ errorMessage }}
+      </p>
+    </form>
+
+    <p class="login__note">
+      There's no public sign-up here — create the admin account in the Firebase Console under
+      Authentication → Users.
+    </p>
+
+    <a routerLink="/" class="login__back">&larr; Back to homepage</a>
+  </div>
+</section>

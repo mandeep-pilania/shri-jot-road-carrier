@@ -1,0 +1,95 @@
+.footer {
+  background: var(--navy-dark);
+  color: rgba(255, 255, 255, 0.7);
+  padding-top: 72px;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr 1.2fr;
+  gap: 32px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer__logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.footer__company { color: var(--white); font-weight: 800; font-family: var(--font-heading); font-size: 16px; }
+.footer__tagline { font-size: 12px; }
+
+.footer__desc { font-size: 13.5px; line-height: 1.7; margin: 14px 0 18px; max-width: 280px; }
+.footer__gstin { font-size: 12px; letter-spacing: 0.4px; color: rgba(255, 255, 255, 0.55); margin: 0 0 18px; }
+
+.footer__col {
+  h4 { color: var(--white); font-size: 14.5px; margin-bottom: 18px; }
+  a { display: block; font-size: 13.5px; margin-bottom: 12px; transition: color 0.2s ease; }
+  a:hover { color: var(--orange); }
+}
+
+.footer__contact p {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 13.5px; margin-bottom: 12px; color: rgba(255, 255, 255, 0.7);
+}
+
+.footer__newsletter p { font-size: 13.5px; margin-bottom: 16px; }
+
+.footer__newsletter-form {
+  display: flex;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 12px 14px;
+    color: var(--white);
+    font-size: 13.5px;
+    outline: none;
+
+    &::placeholder { color: rgba(255, 255, 255, 0.5); }
+  }
+
+  button {
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    padding: 0 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s ease;
+    &:hover { background: var(--orange-dark); }
+  }
+}
+
+.footer__newsletter-success { color: #7ED9A0; margin-top: 10px; }
+.footer__newsletter-error { color: #FF9B8A; margin-top: 10px; font-size: 12.5px; }
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 0;
+  font-size: 12.5px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer__bottom-links {
+  display: flex;
+  gap: 20px;
+
+  a:hover { color: var(--orange); }
+}

@@ -1,0 +1,34 @@
+<section class="gallery">
+  <div class="container">
+    <div class="gallery__head" appReveal>
+      <p class="section-label">Gallery</p>
+      <h2 class="section-heading">A Look Inside Our Operations</h2>
+    </div>
+
+    <div class="gallery__grid">
+      <button
+        type="button"
+        class="gallery__item"
+        *ngFor="let img of images; let i = index"
+        (click)="open(i)"
+        [attr.aria-label]="'View image: ' + img.alt"
+      >
+        <img [src]="img.src" [alt]="img.alt" loading="lazy" />
+        <span class="gallery__zoom"><lucide-icon name="zoom-in" [size]="18"></lucide-icon></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="lightbox" *ngIf="activeIndex() !== null" (click)="close()">
+    <button type="button" class="lightbox__close" (click)="close()" aria-label="Close">
+      <lucide-icon name="x" [size]="26"></lucide-icon>
+    </button>
+    <button type="button" class="lightbox__nav lightbox__nav--prev" (click)="prev($event)" aria-label="Previous image">
+      <lucide-icon name="chevron-left" [size]="28"></lucide-icon>
+    </button>
+    <img [src]="images[activeIndex()!].src" [alt]="images[activeIndex()!].alt" (click)="$event.stopPropagation()" />
+    <button type="button" class="lightbox__nav lightbox__nav--next" (click)="next($event)" aria-label="Next image">
+      <lucide-icon name="chevron-right" [size]="28"></lucide-icon>
+    </button>
+  </div>
+</section>
