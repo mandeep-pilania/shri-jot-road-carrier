@@ -1,0 +1,226 @@
+<div class="admin">
+  <header class="admin__topbar">
+    <a routerLink="/" class="admin__brand">
+      <app-logo-mark [size]="34"></app-logo-mark>
+      <span>Shri Jot Road Carrier <em>Admin</em></span>
+    </a>
+    <div class="admin__topbar-actions">
+      <span class="admin__email" *ngIf="adminEmail()">{{ adminEmail() }}</span>
+      <a routerLink="/" class="btn btn-outline admin__view-site">
+        <lucide-icon name="arrow-right" [size]="14"></lucide-icon>
+        View Site
+      </a>
+      <button type="button" class="btn btn-navy" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <nav class="admin__tabs">
+    <button type="button" [class.is-active]="tab() === 'enquiries'" (click)="setTab('enquiries')">
+      <lucide-icon name="mail" [size]="16"></lucide-icon>
+      Enquiries
+      <span class="admin__badge">{{ contactEnquiries().length + quoteRequests().length }}</span>
+    </button>
+    <button type="button" [class.is-active]="tab() === 'fleet'" (click)="setTab('fleet')">
+      <lucide-icon name="truck" [size]="16"></lucide-icon>
+      Fleet
+      <span class="admin__badge">{{ fleet().length }}</span>
+    </button>
+    <button type="button" [class.is-active]="tab() === 'testimonials'" (click)="setTab('testimonials')">
+      <lucide-icon name="quote" [size]="16"></lucide-icon>
+      Testimonials
+      <span class="admin__badge">{{ testimonials().length }}</span>
+    </button>
+  </nav>
+
+  <main class="admin__content">
+    <!-- ================= ENQUIRIES ================= -->
+    <section *ngIf="tab() === 'enquiries'" class="admin__panel">
+      <div class="admin__subtabs">
+        <button type="button" [class.is-active]="enquiriesTab() === 'contact'" (click)="setEnquiriesTab('contact')">
+          Contact Form ({{ contactEnquiries().length }})
+        </button>
+        <button type="button" [class.is-active]="enquiriesTab() === 'quote'" (click)="setEnquiriesTab('quote')">
+          Quote Requests ({{ quoteRequests().length }})
+        </button>
+      </div>
+
+      <div *ngIf="enquiriesTab() === 'contact'" class="admin__list">
+        <p class="admin__empty" *ngIf="contactEnquiries().length === 0">No contact form submissions yet.</p>
+        <article class="admin__enquiry-card" *ngFor="let e of contactEnquiries(); trackBy: trackById">
+          <div class="admin__enquiry-head">
+            <h3>{{ e.name }}</h3>
+            <span class="admin__enquiry-subject">{{ e.subject }}</span>
+          </div>
+          <p class="admin__enquiry-message">{{ e.message }}</p>
+          <div class="admin__enquiry-meta">
+            <a [href]="'tel:+91' + e.phone"><lucide-icon name="phone" [size]="14"></lucide-icon> {{ e.phone }}</a>
+            <a *ngIf="e.altPhone" [href]="'tel:+91' + e.altPhone"><lucide-icon name="phone" [size]="14"></lucide-icon> {{ e.altPhone }} (alt)</a>
+            <a *ngIf="e.email" [href]="'mailto:' + e.email"><lucide-icon name="mail" [size]="14"></lucide-icon> {{ e.email }}</a>
+          </div>
+        </article>
+      </div>
+
+      <div *ngIf="enquiriesTab() === 'quote'" class="admin__list">
+        <p class="admin__empty" *ngIf="quoteRequests().length === 0">No quote requests yet.</p>
+        <article class="admin__enquiry-card" *ngFor="let q of quoteRequests(); trackBy: trackById">
+          <div class="admin__enquiry-head">
+            <h3>{{ q.name }}</h3>
+            <span class="admin__enquiry-subject">{{ q.fromLocation }} &rarr; {{ q.toLocation }}</span>
+          </div>
+          <div class="admin__quote-grid">
+            <div><span>Goods Type</span><p>{{ q.goodsType }}</p></div>
+            <div><span>Approx. Weight</span><p>{{ q.approxWeight }}</p></div>
+            <div><span>Vehicle Type</span><p>{{ q.vehicleType }}</p></div>
+            <div><span>Pickup Date</span><p>{{ q.pickupDate }}</p></div>
+          </div>
+          <p class="admin__enquiry-message" *ngIf="q.message">{{ q.message }}</p>
+          <div class="admin__enquiry-meta">
+            <a [href]="'tel:+91' + q.phone"><lucide-icon name="phone" [size]="14"></lucide-icon> {{ q.phone }}</a>
+            <a [href]="'mailto:' + q.email"><lucide-icon name="mail" [size]="14"></lucide-icon> {{ q.email }}</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= FLEET ================= -->
+    <section *ngIf="tab() === 'fleet'" class="admin__panel admin__panel--split">
+      <form class="admin__form" [formGroup]="fleetForm" (ngSubmit)="submitFleet()" novalidate>
+        <h2>{{ editingFleetId ? 'Edit Vehicle' : 'Add a Vehicle' }}</h2>
+        <p class="admin__form-hint">This appears in the public Fleet carousel on the home page and /fleet.</p>
+
+        <div class="field">
+          <label for="fv-name">Vehicle Name</label>
+          <input id="fv-name" type="text" formControlName="name" placeholder="e.g. Pickup Truck" />
+        </div>
+
+        <div class="field">
+          <label for="fv-image">Image URL</label>
+          <input id="fv-image" type="text" formControlName="image" placeholder="https://..." />
+          <p class="field-error" *ngIf="fleetForm.controls.image.touched && fleetForm.controls.image.invalid">
+            Enter a valid image URL starting with http(s)://
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="fv-desc">Description</label>
+          <textarea id="fv-desc" rows="3" formControlName="description" placeholder="What this vehicle is best used for..."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="fv-capacity">Capacity Label</label>
+          <input id="fv-capacity" type="text" formControlName="capacity" placeholder="e.g. Up to 1.5 Tons" />
+        </div>
+
+        <div class="field">
+          <label for="fv-order">Display Order</label>
+          <input id="fv-order" type="number" min="0" formControlName="order" />
+          <p class="field-hint">Lower numbers show first in the carousel.</p>
+        </div>
+
+        <div class="admin__form-actions">
+          <button type="submit" class="btn btn-primary" [disabled]="fleetSaving">
+            {{ fleetSaving ? 'Saving...' : (editingFleetId ? 'Save Changes' : 'Add Vehicle') }}
+          </button>
+          <button type="button" class="btn btn-outline" *ngIf="editingFleetId" (click)="resetFleetForm()">Cancel</button>
+        </div>
+        <p class="admin__form-error" *ngIf="fleetError">{{ fleetError }}</p>
+      </form>
+
+      <div class="admin__list admin__list--fleet">
+        <p class="admin__empty" *ngIf="fleet().length === 0">
+          No vehicles in Firestore yet — the public site is showing its bundled default fleet.
+          Add one to start managing it here.
+        </p>
+        <article class="admin__fleet-row" *ngFor="let v of fleet(); trackBy: trackById">
+          <img [src]="v.image" [alt]="v.name" loading="lazy" />
+          <div class="admin__fleet-row-body">
+            <h4>{{ v.name }} <span>#{{ v.order }}</span></h4>
+            <p>{{ v.description }}</p>
+            <span class="admin__fleet-capacity">{{ v.capacity }}</span>
+          </div>
+          <div class="admin__row-actions">
+            <button type="button" (click)="editFleetVehicle(v)" aria-label="Edit vehicle">
+              <lucide-icon name="clipboard-check" [size]="16"></lucide-icon>
+            </button>
+            <button type="button" class="is-danger" (click)="deleteFleetVehicle(v.id)" aria-label="Delete vehicle">
+              <lucide-icon name="x" [size]="16"></lucide-icon>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= TESTIMONIALS ================= -->
+    <section *ngIf="tab() === 'testimonials'" class="admin__panel admin__panel--split">
+      <form class="admin__form" [formGroup]="testimonialForm" (ngSubmit)="submitTestimonial()" novalidate>
+        <h2>{{ editingTestimonialId ? 'Edit Testimonial' : 'Add a Testimonial' }}</h2>
+        <p class="admin__form-hint">This appears in the Testimonials section on the home page.</p>
+
+        <div class="field">
+          <label for="tm-name">Customer Name</label>
+          <input id="tm-name" type="text" formControlName="name" placeholder="e.g. Rakesh Sharma" />
+        </div>
+
+        <div class="field">
+          <label for="tm-business">Business / Location</label>
+          <input id="tm-business" type="text" formControlName="business" placeholder="e.g. Textile Business, Ludhiana" />
+        </div>
+
+        <div class="field">
+          <label for="tm-quote">Testimonial Text</label>
+          <textarea id="tm-quote" rows="3" formControlName="quote" placeholder="What the customer said..."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="tm-rating">Rating (1-5)</label>
+          <input id="tm-rating" type="number" min="1" max="5" formControlName="rating" />
+        </div>
+
+        <div class="field">
+          <label for="tm-avatar">Avatar Photo URL</label>
+          <input id="tm-avatar" type="text" formControlName="avatar" placeholder="https://..." />
+          <p class="field-error" *ngIf="testimonialForm.controls.avatar.touched && testimonialForm.controls.avatar.invalid">
+            Enter a valid image URL starting with http(s)://
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="tm-order">Display Order</label>
+          <input id="tm-order" type="number" min="0" formControlName="order" />
+          <p class="field-hint">Lower numbers show first.</p>
+        </div>
+
+        <div class="admin__form-actions">
+          <button type="submit" class="btn btn-primary" [disabled]="testimonialSaving">
+            {{ testimonialSaving ? 'Saving...' : (editingTestimonialId ? 'Save Changes' : 'Add Testimonial') }}
+          </button>
+          <button type="button" class="btn btn-outline" *ngIf="editingTestimonialId" (click)="resetTestimonialForm()">Cancel</button>
+        </div>
+        <p class="admin__form-error" *ngIf="testimonialError">{{ testimonialError }}</p>
+      </form>
+
+      <div class="admin__list admin__list--fleet">
+        <p class="admin__empty" *ngIf="testimonials().length === 0">
+          No testimonials in Firestore yet — the public site is showing its bundled defaults.
+          Add one to start managing it here.
+        </p>
+        <article class="admin__fleet-row" *ngFor="let t of testimonials(); trackBy: trackById">
+          <img [src]="t.avatar" [alt]="t.name" loading="lazy" class="admin__testimonial-avatar" />
+          <div class="admin__fleet-row-body">
+            <h4>{{ t.name }} <span>#{{ t.order }}</span></h4>
+            <p>&ldquo;{{ t.quote }}&rdquo;</p>
+            <span class="admin__fleet-capacity">{{ t.business }} &middot; {{ t.rating }}&#9733;</span>
+          </div>
+          <div class="admin__row-actions">
+            <button type="button" (click)="editTestimonialItem(t)" aria-label="Edit testimonial">
+              <lucide-icon name="clipboard-check" [size]="16"></lucide-icon>
+            </button>
+            <button type="button" class="is-danger" (click)="deleteTestimonialItem(t.id)" aria-label="Delete testimonial">
+              <lucide-icon name="x" [size]="16"></lucide-icon>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+</div>

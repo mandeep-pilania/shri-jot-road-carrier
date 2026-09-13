@@ -1,4 +1,13 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
+
+// Home is imported eagerly (not loadComponent) since it's the route
+// almost every visitor lands on first -- lazy-loading it would mean a
+// visible blank gap (header/footer only) while its chunk downloads,
+// which is far more noticeable on slower mobile connections. Every
+// other route stays lazy since those only load once a visitor
+// actively navigates there.
+import { HomeComponent } from './features/home/home.component';
 
 // Every route below carries a unique, keyword-rich `title` (used by
 // Angular's built-in TitleStrategy to set document.title automatically)
@@ -9,8 +18,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./features/home/home.component').then((m) => m.HomeComponent),
+    component: HomeComponent,
     title: 'Shri Jot Road Carrier | Transport, House Shifting & Vehicle Carrier in Punjab, Haryana, Rajasthan, Himachal & NCR',
     data: {
       description:
@@ -72,7 +80,15 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/login/login.component').then((m) => m.LoginComponent),
     title: 'Login | Shri Jot Road Carrier',
-    data: { description: 'Admin sign-in for Shri Jot Road Carrier staff.' },
+    data: { description: 'Admin sign-in for Shri Jot Road Carrier staff.', noIndex: true },
+  },
+  {
+    path: 'admin',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/admin/admin-dashboard.component').then((m) => m.AdminDashboardComponent),
+    title: 'Admin Dashboard | Shri Jot Road Carrier',
+    data: { description: 'Admin dashboard for Shri Jot Road Carrier staff.', noIndex: true },
   },
   { path: '**', redirectTo: '' },
 ];

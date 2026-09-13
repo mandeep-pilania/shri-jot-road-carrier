@@ -4,10 +4,8 @@ import { map, take } from 'rxjs';
 import { AuthService } from '../firebase/auth.service';
 
 /**
- * Protects future Admin Dashboard routes. Not applied to any route yet
- * (no admin dashboard exists in this build) — add it to a route's
- * `canActivate: [authGuard]` once that page is built. Redirects signed-out
- * visitors to /login.
+ * Protects the Admin Dashboard route (`canActivate: [authGuard]` on
+ * `/admin` in app.routes.ts). Redirects signed-out visitors to /login.
  */
 export const authGuard: CanActivateFn = () => {
   const auth = inject(AuthService);

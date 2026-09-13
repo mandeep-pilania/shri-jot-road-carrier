@@ -50,6 +50,10 @@ export class SeoService {
         this.meta.updateTag({ property: 'og:url', content: canonicalUrl });
         this.meta.updateTag({ name: 'twitter:title', content: pageTitle });
         this.meta.updateTag({ name: 'twitter:description', content: description });
+        this.meta.updateTag({
+          name: 'robots',
+          content: snapshot.data?.['noIndex'] ? 'noindex, nofollow' : 'index, follow',
+        });
 
         this.updateCanonicalLink(canonicalUrl);
       });

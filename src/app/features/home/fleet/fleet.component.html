@@ -25,7 +25,7 @@
 
       <div class="fleet__viewport">
         <div class="fleet__track" [style.transform]="'translateX(-' + (activeIndex() * 100) + '%)'">
-          <div class="fleet__slide" *ngFor="let v of fleet">
+          <div class="fleet__slide" *ngFor="let v of fleet(); trackBy: trackByIndex">
             <app-fleet-card [data]="v"></app-fleet-card>
           </div>
         </div>
@@ -39,7 +39,7 @@
     <div class="fleet__dots">
       <button
         type="button"
-        *ngFor="let v of fleet; let i = index"
+        *ngFor="let v of fleet(); let i = index; trackBy: trackByIndex"
         class="fleet__dot"
         [class.is-active]="activeIndex() === i"
         (click)="goTo(i)"

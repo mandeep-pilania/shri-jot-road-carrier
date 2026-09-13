@@ -5,29 +5,66 @@
       <h2 class="section-heading">A Look Inside Our Operations</h2>
     </div>
 
-    <div class="gallery__grid">
+    <div
+      class="gallery__carousel"
+      appReveal
+      [revealDelay]="120"
+      (mouseenter)="pauseAutoplay()"
+      (mouseleave)="resumeAutoplay()"
+    >
+      <button type="button" class="gallery__nav gallery__nav--prev" (click)="prevSlide()" aria-label="Previous photo">
+        <lucide-icon name="chevron-left" [size]="22"></lucide-icon>
+      </button>
+
+      <div class="gallery__viewport">
+        <div class="gallery__track" [style.transform]="'translateX(-' + (activeIndex() * 100) + '%)'">
+          <div class="gallery__slide" *ngFor="let img of images; trackBy: trackByIndex">
+            <button
+              type="button"
+              class="gallery__slide-btn"
+              (click)="open()"
+              [attr.aria-label]="'View larger: ' + img.alt"
+            >
+              <img [src]="img.src" [alt]="img.alt" loading="lazy" />
+              <span class="gallery__slide-overlay"></span>
+              <span class="gallery__caption">{{ img.alt }}</span>
+              <span class="gallery__zoom"><lucide-icon name="zoom-in" [size]="20"></lucide-icon></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="gallery__nav gallery__nav--next" (click)="nextSlide()" aria-label="Next photo">
+        <lucide-icon name="chevron-right" [size]="22"></lucide-icon>
+      </button>
+    </div>
+
+    <div class="gallery__thumbs">
       <button
         type="button"
-        class="gallery__item"
-        *ngFor="let img of images; let i = index"
-        (click)="open(i)"
-        [attr.aria-label]="'View image: ' + img.alt"
+        *ngFor="let img of images; let i = index; trackBy: trackByIndex"
+        class="gallery__thumb"
+        [class.is-active]="activeIndex() === i"
+        (click)="goToSlide(i)"
+        [attr.aria-label]="'Show photo ' + (i + 1)"
       >
-        <img [src]="img.src" [alt]="img.alt" loading="lazy" />
-        <span class="gallery__zoom"><lucide-icon name="zoom-in" [size]="18"></lucide-icon></span>
+        <img [src]="img.src" alt="" loading="lazy" />
       </button>
     </div>
   </div>
 
-  <div class="lightbox" *ngIf="activeIndex() !== null" (click)="close()">
+  <div class="lightbox" *ngIf="lightboxOpen()" (click)="close()">
     <button type="button" class="lightbox__close" (click)="close()" aria-label="Close">
       <lucide-icon name="x" [size]="26"></lucide-icon>
     </button>
-    <button type="button" class="lightbox__nav lightbox__nav--prev" (click)="prev($event)" aria-label="Previous image">
+    <button type="button" class="lightbox__nav lightbox__nav--prev" (click)="lightboxPrev($event)" aria-label="Previous image">
       <lucide-icon name="chevron-left" [size]="28"></lucide-icon>
     </button>
-    <img [src]="images[activeIndex()!].src" [alt]="images[activeIndex()!].alt" (click)="$event.stopPropagation()" />
-    <button type="button" class="lightbox__nav lightbox__nav--next" (click)="next($event)" aria-label="Next image">
+    <figure (click)="$event.stopPropagation()">
+      <img [src]="images[activeIndex()].src" [alt]="images[activeIndex()].alt" />
+      <figcaption>{{ images[activeIndex()].alt }}</figcaption>
+    </figure>
+    <button type="button" class="lightbox__nav lightbox__nav--next" (click)="lightboxNext($event)" aria-label="Next image">
       <lucide-icon name="chevron-right" [size]="28"></lucide-icon>
     </button>
   </div>

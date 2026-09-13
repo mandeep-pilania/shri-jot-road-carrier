@@ -60,9 +60,7 @@ export class LoginComponent {
     this.auth.signIn(email, password).subscribe({
       next: () => {
         this.state = 'success';
-        // No admin dashboard route exists yet in this build — swap this
-        // for router.navigateByUrl('/admin') once one is added.
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/admin');
       },
       error: (err) => {
         this.state = 'error';
