@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 import { environment } from '../../../environments/environment';
 
 /**
@@ -10,4 +10,14 @@ import { environment } from '../../../environments/environment';
  */
 export const firebaseApp = initializeApp(environment.firebase);
 export const firebaseAuth = getAuth(firebaseApp);
-export const firestoreDb = getFirestore(firebaseApp);
+
+// Firestore's default transport (WebChannel, backed by HTTP/2 streaming)
+// gets silently blocked or stalled on some corporate networks, proxies
+// and ISPs -- writes and reads never error out, they just hang, which is
+// exactly what showed up as "This is taking longer than expected" on the
+// contact form even though the write had actually gone through. Long
+// polling is slower per-request but far more reliable on those networks;
+// auto-detect keeps the faster WebChannel transport everywhere else.
+export const firestoreDb = initializeFirestore(firebaseApp, {
+  experimentalAutoDetectLongPolling: true,
+});

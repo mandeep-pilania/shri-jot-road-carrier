@@ -111,25 +111,6 @@
 }
 
 // ----- Enquiries -----
-.admin__subtabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-
-  button {
-    padding: 9px 16px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border-light);
-    background: var(--white);
-    font-weight: 600;
-    font-size: 13.5px;
-    color: var(--navy-dark);
-    cursor: pointer;
-
-    &.is-active { background: var(--navy); color: var(--white); border-color: var(--navy); }
-  }
-}
-
 .admin__list {
   display: flex;
   flex-direction: column;
@@ -144,6 +125,33 @@
   text-align: center;
   font-size: 14px;
   color: var(--text-gray);
+}
+
+.admin__error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fdf1f1;
+  border: 1.5px solid #f3c8c8;
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #d64545;
+}
+
+.admin__retry {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: auto;
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover { color: var(--orange-dark); }
 }
 
 .admin__enquiry-card {
@@ -162,7 +170,24 @@
   gap: 8px;
   margin-bottom: 8px;
 
-  h3 { font-size: 15.5px; font-weight: 700; color: var(--navy-dark); }
+  h3 { font-size: 15.5px; font-weight: 700; color: var(--navy-dark); margin-right: auto; }
+}
+
+.admin__delete {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background: var(--white);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+  &:hover { background: #D64545; border-color: #D64545; color: var(--white); }
 }
 
 .admin__enquiry-subject {
@@ -196,21 +221,6 @@
 
     &:hover { color: var(--orange); }
   }
-}
-
-.admin__quote-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px 16px;
-  margin-bottom: 12px;
-  background: var(--gray-light);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-
-  @media (max-width: 640px) { grid-template-columns: repeat(2, 1fr); }
-
-  span { display: block; font-size: 11px; text-transform: uppercase; color: var(--text-gray); margin-bottom: 2px; }
-  p { font-size: 13.5px; font-weight: 700; color: var(--navy-dark); }
 }
 
 // ----- Fleet / Testimonials shared -----
@@ -337,6 +347,38 @@
   color: var(--orange);
   text-transform: uppercase;
   letter-spacing: 0.3px;
+}
+
+.admin__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 8px;
+
+  span {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-gray);
+  }
+
+  button {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    background: var(--white);
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+    &:hover:not(:disabled) { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+    &:disabled { opacity: 0.4; cursor: not-allowed; }
+  }
 }
 
 .admin__row-actions {

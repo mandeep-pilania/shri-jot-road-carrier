@@ -6,7 +6,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { LogoMarkComponent } from '../../shared/components/logo-mark/logo-mark.component';
 import { AuthService } from '../../core/firebase/auth.service';
 import { FirebaseStatusService } from '../../core/firebase/firebase-status.service';
-import { SubmissionState } from '../../core/models/quote-request.model';
+import { SubmissionState } from '../../core/models/submission-state.model';
 
 /**
  * Admin login page for the future Admin Dashboard, backed by Firebase
@@ -64,10 +64,13 @@ export class LoginComponent {
       },
       error: (err) => {
         this.state = 'error';
-        this.errorMessage =
-          err?.code === 'auth/invalid-credential' || err?.code === 'auth/wrong-password'
-            ? 'Incorrect email or password.'
-            : 'Sign-in failed. Please try again.';
+        if (err?.code === 'auth/invalid-credential' || err?.code === 'auth/wrong-password') {
+          this.errorMessage = 'Incorrect email or password.';
+        } else if (err?.code === 'auth/timeout') {
+          this.errorMessage = err.message;
+        } else {
+          this.errorMessage = 'Sign-in failed. Please try again.';
+        }
       },
     });
   }

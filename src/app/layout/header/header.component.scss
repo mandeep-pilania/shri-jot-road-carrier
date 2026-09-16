@@ -134,6 +134,13 @@
   font-weight: 600;
   color: var(--white);
   transition: color 0.3s ease;
+  // Reset button chrome so the Logout <button> matches the Login <a> it
+  // swaps places with -- these rules are no-ops on the anchor.
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
 
   &:hover { color: var(--orange); }
 }

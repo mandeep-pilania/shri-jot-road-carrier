@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 
-import { Component, OnDestroy, OnInit, inject, signal } from "@angular/core";
+import { Component, OnDestroy, OnInit, WritableSignal, inject, signal } from "@angular/core";
 
 import { toSignal } from "@angular/core/rxjs-interop";
 
@@ -22,8 +22,6 @@ import { TestimonialsService } from "../../core/services/testimonials.service";
 
 import { ContactEnquiry } from "../../core/models/contact-enquiry.model";
 
-import { QuoteRequest } from "../../core/models/quote-request.model";
-
 import { FleetVehicle } from "../../core/models/fleet-vehicle.model";
 
 import { Testimonial } from "../../core/models/testimonial.model";
@@ -32,12 +30,12 @@ import { LogoMarkComponent } from "../../shared/components/logo-mark/logo-mark.c
 
 type AdminTab = "enquiries" | "fleet" | "testimonials";
 
-type EnquiriesSubTab = "contact" | "quote";
+const PAGE_SIZE = 5;
 
 /**
  * Admin dashboard behind /admin (see authGuard on that route). Three
  * tabs:
- * - Enquiries: read-only realtime view of contactEnquiries + quoteRequests
+ * - Enquiries: read-only realtime view of contactEnquiries
  * - Fleet: add / edit / delete the vehicles shown in the public Fleet
  *   carousel (FleetService, Firestore collection `fleet`)
  * - Testimonials: add / edit / delete the testimonials shown on the
@@ -77,8 +75,6 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   readonly tab = signal<AdminTab>("enquiries");
 
-  readonly enquiriesTab = signal<EnquiriesSubTab>("contact");
-
   readonly adminEmail = toSignal(
     this.auth.user$.pipe(map((u) => u?.email ?? "")),
     { initialValue: "" },
@@ -88,11 +84,15 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   readonly contactEnquiries = signal<(ContactEnquiry & { id: string })[]>([]);
 
-  readonly quoteRequests = signal<(QuoteRequest & { id: string })[]>([]);
+  readonly enquiriesError = signal("");
+
+  readonly enquiriesPage = signal(1);
 
   // ----- Fleet -----
 
   readonly fleet = signal<FleetVehicle[]>([]);
+
+  readonly fleetPage = signal(1);
 
   editingFleetId: string | null = null;
 
@@ -116,6 +116,8 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   readonly testimonials = signal<Testimonial[]>([]);
 
+  readonly testimonialsPage = signal(1);
+
   editingTestimonialId: string | null = null;
 
   testimonialSaving = false;
@@ -138,18 +140,10 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   private subs: Subscription[] = [];
 
-  ngOnInit(): void {
-    this.subs.push(
-      this.enquiriesService
-        .contactEnquiries()
-        .subscribe((list) => this.contactEnquiries.set(list)),
-    );
+  private enquiriesSub?: Subscription;
 
-    this.subs.push(
-      this.enquiriesService
-        .quoteRequests()
-        .subscribe((list) => this.quoteRequests.set(list)),
-    );
+  ngOnInit(): void {
+    this.loadEnquiries();
 
     this.subs.push(
       this.fleetService.list().subscribe((list) => this.fleet.set(list)),
@@ -164,14 +158,57 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+    this.enquiriesSub?.unsubscribe();
+  }
+
+  private loadEnquiries(): void {
+    this.enquiriesError.set("");
+    this.enquiriesSub = this.enquiriesService.contactEnquiries().subscribe({
+      next: (list) => this.contactEnquiries.set(list),
+      error: () =>
+        this.enquiriesError.set(
+          "Couldn't load enquiries. Please check your connection and try again.",
+        ),
+    });
+  }
+
+  retryEnquiries(): void {
+    this.enquiriesSub?.unsubscribe();
+    this.loadEnquiries();
+  }
+
+  deleteEnquiryItem(id: string | undefined): void {
+    if (!id) return;
+
+    if (!confirm("Delete this enquiry? This can't be undone.")) return;
+
+    this.enquiriesService.deleteEnquiry(id).subscribe();
+  }
+
+  // ----- Pagination (shared by Enquiries, Fleet, Testimonials) -----
+
+  totalPages(length: number): number {
+    return Math.max(1, Math.ceil(length / PAGE_SIZE));
+  }
+
+  /** Clamped so a page that no longer exists (e.g. after a delete) falls
+   * back to the last valid page, without writing back to the signal
+   * during a template read. */
+  displayPage(page: number, length: number): number {
+    return Math.min(Math.max(1, page), this.totalPages(length));
+  }
+
+  paged<T>(list: T[], page: number): T[] {
+    const start = (this.displayPage(page, list.length) - 1) * PAGE_SIZE;
+    return list.slice(start, start + PAGE_SIZE);
+  }
+
+  goToPage(pageSignal: WritableSignal<number>, page: number, length: number): void {
+    pageSignal.set(Math.min(Math.max(1, page), this.totalPages(length)));
   }
 
   setTab(tab: AdminTab): void {
     this.tab.set(tab);
-  }
-
-  setEnquiriesTab(tab: EnquiriesSubTab): void {
-    this.enquiriesTab.set(tab);
   }
 
   logout(): void {

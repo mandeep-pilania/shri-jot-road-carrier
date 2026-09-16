@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
 import { ContactService } from '../../../core/services/contact.service';
-import { SubmissionState } from '../../../core/models/quote-request.model';
+import { SubmissionState } from '../../../core/models/submission-state.model';
 import { RevealDirective } from '../../../shared/directives/reveal.directive';
 
 const PHONE_PATTERN = /^[6-9]\d{9}$/;
@@ -29,6 +29,7 @@ export class ContactComponent {
   });
 
   state: SubmissionState = 'idle';
+  errorMessage = '';
 
   constructor(private contactService: ContactService) {}
 
@@ -37,12 +38,17 @@ export class ContactComponent {
   }
 
   onSubmit(): void {
+    // Guards against a double-fire (e.g. rapid double-click) in addition
+    // to the disabled [disabled]="state === 'loading'" submit button.
+    if (this.state === 'loading') return;
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     this.state = 'loading';
+    this.errorMessage = '';
     const raw = this.form.getRawValue();
     const payload = {
       name: raw.name,
@@ -57,13 +63,20 @@ export class ContactComponent {
     };
 
     this.contactService.submitEnquiry(payload).subscribe({
-      next: () => {
+      next: () => { 
         this.state = 'success';
         this.form.reset();
       },
-      error: () => {
+      error: (err: unknown) => {
         this.state = 'error';
+        this.errorMessage =
+          err instanceof Error ? err.message : 'Something went wrong. Please try again.';
       },
     });
+  }
+
+  dismissStatus(): void {
+    this.state = 'idle';
+    this.errorMessage = '';
   }
 }

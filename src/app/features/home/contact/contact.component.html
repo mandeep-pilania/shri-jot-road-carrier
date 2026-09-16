@@ -88,13 +88,14 @@
           </ng-container>
         </button>
 
-        <p class="contact__status contact__status--success" *ngIf="state === 'success'">
+        <p class="contact__status contact__status--success" *ngIf="state === 'success'" role="status">
           <lucide-icon name="check-circle-2" [size]="16"></lucide-icon>
-          Message sent! We'll get back to you shortly.
+          Thank you! Your message has been submitted successfully. We'll get back to you shortly.
         </p>
-        <p class="contact__status contact__status--error" *ngIf="state === 'error'">
+        <p class="contact__status contact__status--error" *ngIf="state === 'error'" role="alert">
           <lucide-icon name="alert-circle" [size]="16"></lucide-icon>
-          Something went wrong. Please try again.
+          {{ errorMessage || 'Something went wrong. Please try again.' }}
+          <button type="button" class="contact__retry" (click)="dismissStatus()">Try Again</button>
         </p>
       </div>
     </form>

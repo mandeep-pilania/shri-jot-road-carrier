@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component, signal } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { SeoService } from './core/services/seo.service';
@@ -7,17 +9,27 @@ import { SeoService } from './core/services/seo.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <app-header></app-header>
+    <app-header *ngIf="!isAdminRoute()"></app-header>
     <main>
       <router-outlet></router-outlet>
     </main>
-    <app-footer></app-footer>
+    <app-footer *ngIf="!isAdminRoute()"></app-footer>
   `,
 })
 export class AppComponent {
-  constructor(seo: SeoService) {
+  // The Admin Dashboard is a self-contained shell with its own top bar
+  // (logo, "View Site", Logout) -- layering the public site's header and
+  // footer around it too produced two stacked headers (one navy, one
+  // white) on /admin.
+  readonly isAdminRoute = signal(false);
+
+  constructor(router: Router, seo: SeoService) {
     seo.init();
+    this.isAdminRoute.set(router.url.startsWith('/admin'));
+    router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd)).subscribe((e) => {
+      this.isAdminRoute.set(e.urlAfterRedirects.startsWith('/admin'));
+    });
   }
 }

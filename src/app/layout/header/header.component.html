@@ -25,8 +25,9 @@
         <lucide-icon name="phone" [size]="16"></lucide-icon>
         <span>+91 90234 24923</span>
       </a>
-      <a routerLink="/login" class="header__login">Login</a>
-      <a routerLink="/contact" class="btn btn-primary header__cta">Get a Quote</a>
+      <a *ngIf="!isSignedIn()" routerLink="/login" class="header__login">Login</a>
+      <button *ngIf="isSignedIn()" type="button" class="header__login" (click)="logout()">Logout</button>
+      <a routerLink="/contact" class="btn btn-primary header__cta">Contact Us</a>
     </div>
 
     <button
@@ -59,8 +60,9 @@
       +91 90234 24923
     </a>
     <div class="header__mobile-actions">
-      <a routerLink="/login" class="btn btn-outline" (click)="closeMobileMenu()">Login</a>
-      <a routerLink="/contact" class="btn btn-primary" (click)="closeMobileMenu()">Get a Quote</a>
+      <a *ngIf="!isSignedIn()" routerLink="/login" class="btn btn-outline" (click)="closeMobileMenu()">Login</a>
+      <button *ngIf="isSignedIn()" type="button" class="btn btn-outline" (click)="logout()">Logout</button>
+      <a routerLink="/contact" class="btn btn-primary" (click)="closeMobileMenu()">Contact Us</a>
     </div>
   </nav>
 </header>

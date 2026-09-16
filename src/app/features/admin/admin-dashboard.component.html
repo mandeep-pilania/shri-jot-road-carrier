@@ -18,7 +18,7 @@
     <button type="button" [class.is-active]="tab() === 'enquiries'" (click)="setTab('enquiries')">
       <lucide-icon name="mail" [size]="16"></lucide-icon>
       Enquiries
-      <span class="admin__badge">{{ contactEnquiries().length + quoteRequests().length }}</span>
+      <span class="admin__badge">{{ contactEnquiries().length }}</span>
     </button>
     <button type="button" [class.is-active]="tab() === 'fleet'" (click)="setTab('fleet')">
       <lucide-icon name="truck" [size]="16"></lucide-icon>
@@ -35,21 +35,20 @@
   <main class="admin__content">
     <!-- ================= ENQUIRIES ================= -->
     <section *ngIf="tab() === 'enquiries'" class="admin__panel">
-      <div class="admin__subtabs">
-        <button type="button" [class.is-active]="enquiriesTab() === 'contact'" (click)="setEnquiriesTab('contact')">
-          Contact Form ({{ contactEnquiries().length }})
-        </button>
-        <button type="button" [class.is-active]="enquiriesTab() === 'quote'" (click)="setEnquiriesTab('quote')">
-          Quote Requests ({{ quoteRequests().length }})
-        </button>
-      </div>
-
-      <div *ngIf="enquiriesTab() === 'contact'" class="admin__list">
+      <p class="admin__error" *ngIf="enquiriesError()">
+        <lucide-icon name="alert-circle" [size]="16"></lucide-icon>
+        {{ enquiriesError() }}
+        <button type="button" class="admin__retry" (click)="retryEnquiries()">Try Again</button>
+      </p>
+      <div class="admin__list" *ngIf="!enquiriesError()">
         <p class="admin__empty" *ngIf="contactEnquiries().length === 0">No contact form submissions yet.</p>
-        <article class="admin__enquiry-card" *ngFor="let e of contactEnquiries(); trackBy: trackById">
+        <article class="admin__enquiry-card" *ngFor="let e of paged(contactEnquiries(), enquiriesPage()); trackBy: trackById">
           <div class="admin__enquiry-head">
             <h3>{{ e.name }}</h3>
             <span class="admin__enquiry-subject">{{ e.subject }}</span>
+            <button type="button" class="admin__delete" (click)="deleteEnquiryItem(e.id)" aria-label="Delete enquiry">
+              <lucide-icon name="x" [size]="16"></lucide-icon>
+            </button>
           </div>
           <p class="admin__enquiry-message">{{ e.message }}</p>
           <div class="admin__enquiry-meta">
@@ -58,27 +57,16 @@
             <a *ngIf="e.email" [href]="'mailto:' + e.email"><lucide-icon name="mail" [size]="14"></lucide-icon> {{ e.email }}</a>
           </div>
         </article>
-      </div>
 
-      <div *ngIf="enquiriesTab() === 'quote'" class="admin__list">
-        <p class="admin__empty" *ngIf="quoteRequests().length === 0">No quote requests yet.</p>
-        <article class="admin__enquiry-card" *ngFor="let q of quoteRequests(); trackBy: trackById">
-          <div class="admin__enquiry-head">
-            <h3>{{ q.name }}</h3>
-            <span class="admin__enquiry-subject">{{ q.fromLocation }} &rarr; {{ q.toLocation }}</span>
-          </div>
-          <div class="admin__quote-grid">
-            <div><span>Goods Type</span><p>{{ q.goodsType }}</p></div>
-            <div><span>Approx. Weight</span><p>{{ q.approxWeight }}</p></div>
-            <div><span>Vehicle Type</span><p>{{ q.vehicleType }}</p></div>
-            <div><span>Pickup Date</span><p>{{ q.pickupDate }}</p></div>
-          </div>
-          <p class="admin__enquiry-message" *ngIf="q.message">{{ q.message }}</p>
-          <div class="admin__enquiry-meta">
-            <a [href]="'tel:+91' + q.phone"><lucide-icon name="phone" [size]="14"></lucide-icon> {{ q.phone }}</a>
-            <a [href]="'mailto:' + q.email"><lucide-icon name="mail" [size]="14"></lucide-icon> {{ q.email }}</a>
-          </div>
-        </article>
+        <div class="admin__pagination" *ngIf="contactEnquiries().length > 5">
+          <button type="button" [disabled]="displayPage(enquiriesPage(), contactEnquiries().length) === 1" (click)="goToPage(enquiriesPage, displayPage(enquiriesPage(), contactEnquiries().length) - 1, contactEnquiries().length)">
+            <lucide-icon name="chevron-left" [size]="16"></lucide-icon>
+          </button>
+          <span>Page {{ displayPage(enquiriesPage(), contactEnquiries().length) }} of {{ totalPages(contactEnquiries().length) }}</span>
+          <button type="button" [disabled]="displayPage(enquiriesPage(), contactEnquiries().length) === totalPages(contactEnquiries().length)" (click)="goToPage(enquiriesPage, displayPage(enquiriesPage(), contactEnquiries().length) + 1, contactEnquiries().length)">
+            <lucide-icon name="chevron-right" [size]="16"></lucide-icon>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -131,7 +119,7 @@
           No vehicles in Firestore yet — the public site is showing its bundled default fleet.
           Add one to start managing it here.
         </p>
-        <article class="admin__fleet-row" *ngFor="let v of fleet(); trackBy: trackById">
+        <article class="admin__fleet-row" *ngFor="let v of paged(fleet(), fleetPage()); trackBy: trackById">
           <img [src]="v.image" [alt]="v.name" loading="lazy" />
           <div class="admin__fleet-row-body">
             <h4>{{ v.name }} <span>#{{ v.order }}</span></h4>
@@ -147,6 +135,16 @@
             </button>
           </div>
         </article>
+
+        <div class="admin__pagination" *ngIf="fleet().length > 5">
+          <button type="button" [disabled]="displayPage(fleetPage(), fleet().length) === 1" (click)="goToPage(fleetPage, displayPage(fleetPage(), fleet().length) - 1, fleet().length)">
+            <lucide-icon name="chevron-left" [size]="16"></lucide-icon>
+          </button>
+          <span>Page {{ displayPage(fleetPage(), fleet().length) }} of {{ totalPages(fleet().length) }}</span>
+          <button type="button" [disabled]="displayPage(fleetPage(), fleet().length) === totalPages(fleet().length)" (click)="goToPage(fleetPage, displayPage(fleetPage(), fleet().length) + 1, fleet().length)">
+            <lucide-icon name="chevron-right" [size]="16"></lucide-icon>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -204,7 +202,7 @@
           No testimonials in Firestore yet — the public site is showing its bundled defaults.
           Add one to start managing it here.
         </p>
-        <article class="admin__fleet-row" *ngFor="let t of testimonials(); trackBy: trackById">
+        <article class="admin__fleet-row" *ngFor="let t of paged(testimonials(), testimonialsPage()); trackBy: trackById">
           <img [src]="t.avatar" [alt]="t.name" loading="lazy" class="admin__testimonial-avatar" />
           <div class="admin__fleet-row-body">
             <h4>{{ t.name }} <span>#{{ t.order }}</span></h4>
@@ -220,6 +218,16 @@
             </button>
           </div>
         </article>
+
+        <div class="admin__pagination" *ngIf="testimonials().length > 5">
+          <button type="button" [disabled]="displayPage(testimonialsPage(), testimonials().length) === 1" (click)="goToPage(testimonialsPage, displayPage(testimonialsPage(), testimonials().length) - 1, testimonials().length)">
+            <lucide-icon name="chevron-left" [size]="16"></lucide-icon>
+          </button>
+          <span>Page {{ displayPage(testimonialsPage(), testimonials().length) }} of {{ totalPages(testimonials().length) }}</span>
+          <button type="button" [disabled]="displayPage(testimonialsPage(), testimonials().length) === totalPages(testimonials().length)" (click)="goToPage(testimonialsPage, displayPage(testimonialsPage(), testimonials().length) + 1, testimonials().length)">
+            <lucide-icon name="chevron-right" [size]="16"></lucide-icon>
+          </button>
+        </div>
       </div>
     </section>
   </main>

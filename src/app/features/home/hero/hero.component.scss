@@ -1,32 +1,56 @@
 .hero {
   position: relative;
-  min-height: 92vh;
+  // Pegging height to viewport height alone (100vh) makes an ultra-wide
+  // desktop window very short-and-wide relative to the source photo,
+  // which forces `object-fit: cover` to crop most of the image away to
+  // fit that shape. Capping with min() keeps the hero tall enough for
+  // `cover` to show most of the frame at any width, without the section
+  // ballooning to full viewport height on tall monitors either.
+  min-height: min(88svh, 780px);
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding-top: 80px;
+  padding: 120px 0 80px;
 
   @media (max-width: 768px) {
     min-height: auto;
-    padding: 140px 0 60px;
+    padding: 128px 0 72px;
+  }
+
+  // Beyond ~2200px the viewport gets wide enough, relative to the
+  // capped height above, that `cover` has to crop away too much of the
+  // photo to fill the frame. Growing the cap on very wide screens keeps
+  // the crop reasonable without letting the section balloon on ordinary
+  // desktops.
+  @media (min-width: 2200px) {
+    min-height: min(88svh, 980px);
   }
 }
 
 .hero__bg {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(100deg, rgba(6, 29, 51, 0.65) 0%, rgba(6, 29, 51, 0.25) 55%, rgba(6, 29, 51, 0.05) 100%),
-    url('https://images.unsplash.com/photo-1485575301924-6891ef935dcd?auto=format&fit=crop&w=1600&q=80');
-  background-size: cover;
-  background-position: center right;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  // Plain center avoids the previous "center right" bias, which pinned
+  // the crop window to the image's right edge -- fine at the taller
+  // aspect ratios mobile/tablet render at, but on wide desktop viewports
+  // it pushed most of the photo (and its subject) off-screen to the left.
+  object-position: center;
   background-color: var(--navy-dark);
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(6, 29, 51, 0.82) 0%, rgba(6, 29, 51, 0.55) 45%, rgba(6, 29, 51, 0.15) 100%);
 }
 
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(6, 29, 51, 0.35) 0%, rgba(6, 29, 51, 0.55) 100%);
+  background: linear-gradient(180deg, rgba(6, 29, 51, 0.1) 0%, rgba(6, 29, 51, 0.65) 100%);
 }
 
 .hero__content {
@@ -36,43 +60,51 @@
 }
 
 .hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
   color: var(--orange);
   font-weight: 700;
-  font-size: 13px;
+  font-size: clamp(12px, 1.4vw, 13px);
   letter-spacing: 2px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .hero__heading {
-  font-size: 52px;
+  font-size: clamp(30px, 5.2vw, 56px);
   font-weight: 800;
   color: var(--white);
-  margin-bottom: 20px;
-
-  @media (max-width: 768px) { font-size: 34px; }
-  @media (max-width: 400px) { font-size: 28px; }
+  letter-spacing: -0.5px;
+  margin-bottom: 22px;
 }
 
 .hero__highlight { color: var(--orange); display: block; }
 
 .hero__description {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 16.5px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(15px, 1.6vw, 17.5px);
   max-width: 500px;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 
 .hero__ctas {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 44px;
+  margin-bottom: 40px;
+
+  .btn {
+    padding: 15px 28px;
+  }
+
+  @media (max-width: 400px) {
+    .btn { flex: 1 1 100%; justify-content: center; }
+  }
 }
 
 .hero__trust {
   display: flex;
   flex-wrap: wrap;
-  gap: 22px;
+  gap: 12px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -82,9 +114,44 @@
     align-items: center;
     gap: 8px;
     color: var(--white);
-    font-size: 13.5px;
+    font-size: 13px;
     font-weight: 600;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(6px);
+    border-radius: 999px;
+    padding: 9px 16px;
   }
 
-  lucide-icon { color: var(--orange); }
+  lucide-icon { color: var(--orange); flex-shrink: 0; }
+}
+
+.hero__scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: var(--white);
+  animation: hero-scroll-cue 2s ease-in-out infinite;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes hero-scroll-cue {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+  50% { transform: translateX(-50%) translateY(6px); opacity: 1; }
 }

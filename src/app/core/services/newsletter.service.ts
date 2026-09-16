@@ -7,7 +7,7 @@ import { FirebaseStatusService } from '../firebase/firebase-status.service';
 /**
  * Writes footer newsletter sign-ups to the `newsletterSubscribers`
  * Firestore collection: { email, createdAt }. Same pattern as
- * QuoteService / ContactService.
+ * ContactService.
  */
 @Injectable({ providedIn: 'root' })
 export class NewsletterService {

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { HeroComponent } from './hero/hero.component';
-import { QuoteComponent } from './quote/quote.component';
 import { ServicesComponent } from './services/services.component';
 import { AboutComponent } from './about/about.component';
 import { StatsComponent } from './stats/stats.component';
@@ -22,7 +21,6 @@ import { ContactComponent } from './contact/contact.component';
   standalone: true,
   imports: [
     HeroComponent,
-    QuoteComponent,
     ServicesComponent,
     AboutComponent,
     StatsComponent,

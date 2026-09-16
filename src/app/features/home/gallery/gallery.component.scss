@@ -45,7 +45,12 @@
   overflow: hidden;
 
   @media (max-width: 900px) { height: 360px; }
-  @media (max-width: 560px) { height: 260px; }
+  // Below 560px the round nav buttons (see .gallery__nav) are hidden and
+  // navigation happens via the thumbnail strip instead, so the slide gets
+  // the full container width here -- a shorter height keeps the box from
+  // becoming near-square against that full width, which was forcing a
+  // tight, zoomed-in crop on every photo.
+  @media (max-width: 560px) { height: 210px; }
 
   img {
     width: 100%;
@@ -61,7 +66,7 @@
 .gallery__slide-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(6, 29, 51, 0) 55%, rgba(6, 29, 51, 0.75) 100%);
+  background: linear-gradient(180deg, rgba(6, 29, 51, 0) 25%, rgba(6, 29, 51, 0.86) 100%);
 }
 
 .gallery__caption {
@@ -70,12 +75,13 @@
   right: 24px;
   bottom: 20px;
   color: var(--white);
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 600;
+  line-height: 1.5;
   text-align: left;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
 
-  @media (max-width: 560px) { font-size: 13px; left: 16px; right: 16px; bottom: 14px; }
+  @media (max-width: 560px) { font-size: 12.5px; line-height: 1.45; left: 16px; right: 16px; bottom: 14px; }
 }
 
 .gallery__zoom {
@@ -116,9 +122,11 @@
     transform: scale(1.06);
   }
 
+  // Hidden below 560px: at that width these buttons ate enough space to
+  // squeeze the slide into a near-square box, over-cropping every photo.
+  // The thumbnail strip below the carousel still lets visitors navigate.
   @media (max-width: 560px) {
-    width: 38px;
-    height: 38px;
+    display: none;
   }
 }
 

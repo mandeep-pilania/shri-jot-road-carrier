@@ -1,5 +1,19 @@
 <section class="hero">
-  <div class="hero__bg" role="img" aria-label="Cargo truck driving on an Indian highway at sunrise"></div>
+  <img
+    class="hero__bg"
+    src="https://images.unsplash.com/photo-1626446644149-92e5039b74f0?auto=format&fit=crop&w=1920&q=80"
+    srcset="
+      https://images.unsplash.com/photo-1626446644149-92e5039b74f0?auto=format&fit=crop&w=800&q=80 800w,
+      https://images.unsplash.com/photo-1626446644149-92e5039b74f0?auto=format&fit=crop&w=1280&q=80 1280w,
+      https://images.unsplash.com/photo-1626446644149-92e5039b74f0?auto=format&fit=crop&w=1920&q=80 1920w,
+      https://images.unsplash.com/photo-1626446644149-92e5039b74f0?auto=format&fit=crop&w=2560&q=80 2560w,
+      https://images.unsplash.com/photo-1626446644149-92e5039b74f0?auto=format&fit=crop&w=3840&q=80 3840w
+    "
+    sizes="100vw"
+    alt=""
+    fetchpriority="high"
+  />
+  <div class="hero__scrim"></div>
   <div class="hero__overlay"></div>
 
   <div class="container hero__content">
@@ -14,8 +28,8 @@
     </p>
 
     <div class="hero__ctas">
-      <a href="#quote" class="btn btn-primary">
-        Get an Instant Quote
+      <a href="#contact" class="btn btn-primary">
+        Get in Touch
         <lucide-icon name="arrow-right" [size]="18"></lucide-icon>
       </a>
       <a href="tel:+919023424923" class="btn btn-secondary">
@@ -31,4 +45,8 @@
       </li>
     </ul>
   </div>
+
+  <a href="#services" class="hero__scroll-cue" aria-label="Scroll to explore our services">
+    <lucide-icon name="chevron-down" [size]="22"></lucide-icon>
+  </a>
 </section>

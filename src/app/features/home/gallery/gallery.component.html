@@ -3,6 +3,10 @@
     <div class="gallery__head" appReveal>
       <p class="section-label">Gallery</p>
       <h2 class="section-heading">A Look Inside Our Operations</h2>
+      <p class="section-description" style="margin: 0 auto;">
+        From loading yards to national highways, here's a glimpse of how we keep goods moving safely and
+        on schedule across Punjab, Haryana and Delhi NCR.
+      </p>
     </div>
 
     <div
@@ -23,11 +27,11 @@
               type="button"
               class="gallery__slide-btn"
               (click)="open()"
-              [attr.aria-label]="'View larger: ' + img.alt"
+              [attr.aria-label]="'View larger: ' + img.caption"
             >
               <img [src]="img.src" [alt]="img.alt" loading="lazy" />
               <span class="gallery__slide-overlay"></span>
-              <span class="gallery__caption">{{ img.alt }}</span>
+              <span class="gallery__caption">{{ img.caption }}</span>
               <span class="gallery__zoom"><lucide-icon name="zoom-in" [size]="20"></lucide-icon></span>
             </button>
           </div>
@@ -62,7 +66,7 @@
     </button>
     <figure (click)="$event.stopPropagation()">
       <img [src]="images[activeIndex()].src" [alt]="images[activeIndex()].alt" />
-      <figcaption>{{ images[activeIndex()].alt }}</figcaption>
+      <figcaption>{{ images[activeIndex()].caption }}</figcaption>
     </figure>
     <button type="button" class="lightbox__nav lightbox__nav--next" (click)="lightboxNext($event)" aria-label="Next image">
       <lucide-icon name="chevron-right" [size]="28"></lucide-icon>

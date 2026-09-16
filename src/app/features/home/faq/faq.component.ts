@@ -18,7 +18,7 @@ interface FaqItem {
 export class FaqComponent {
   readonly faqs: FaqItem[] = [
     { question: 'What areas do you cover?', answer: 'We run daily transport service across Punjab, Haryana, Rajasthan, Himachal Pradesh and all of NCR, operating out of our Transport Nagar, Ludhiana hub.' },
-    { question: 'How can I get a transport quote?', answer: 'Fill out the instant quote form with your pickup and delivery details, or contact our support team directly.' },
+    { question: 'How can I get a transport quote?', answer: 'Call our support team directly, or fill out the contact form with your pickup and delivery details and we’ll get back to you with pricing.' },
     { question: 'What types of goods do you transport?', answer: 'We transport general goods, industrial machinery, FMCG, perishables, electronics, construction material and more.' },
     { question: 'Do you provide full truck load services?', answer: 'Yes, our Full Truck Load (FTL) service offers dedicated vehicles for large shipments.' },
     { question: 'Do you provide part load services?', answer: 'Yes, our Part Truck Load (PTL) service is a cost-effective option for smaller shipments.' },
